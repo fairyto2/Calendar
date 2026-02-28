@@ -237,7 +237,8 @@ class CalendarController: NSObject {
             day.text = weekdays[(calendar.firstWeekday + index - 1) % daysInWeek]
         } else {
             let dayOffset = index - daysInWeek
-            let date = calendar.date(byAdding: .day, value: dayOffset, to: lastFirstWeekdayLastMonth!)!
+            guard let lastFirstWeekday = lastFirstWeekdayLastMonth else { return Day() }
+            let date = calendar.date(byAdding: .day, value: dayOffset, to: lastFirstWeekday)!
             
             day.isNumber = true
             day.text = String(calendar.ordinality(of: .day, in: .month, for: date)!)
